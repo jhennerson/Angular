@@ -1,1 +1,48 @@
-<p>clientes works!</p>
+<mat-card>
+  <mat-toolbar color="primary">
+    <span>Meus Clientes</span>
+  </mat-toolbar>
+
+  <div *ngIf="clientes$ | async as clientes; else loading">
+    <table mat-table [dataSource]="clientes" class="mat-elevation-z8">
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.id}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef> Nome </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.nome}} </td>
+      </ng-container>
+
+      <!-- E-mail Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> E-mail </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.email}} </td>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container matColumnDef="telefone">
+        <th mat-header-cell *matHeaderCellDef> Telefone </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.telefone}} </td>
+      </ng-container>
+
+      <!-- Operations Column -->
+      <ng-container matColumnDef="operacoes">
+        <th mat-header-cell *matHeaderCellDef> Operações </th>
+        <td mat-cell *matCellDef="let cliente"> {{cliente.operacoes}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <ng-template #loading>
+    <div class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</mat-card>
