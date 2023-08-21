@@ -1,0 +1,61 @@
+package com.reservacliente.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.reservacliente.models.Cliente;
+import com.reservacliente.repositories.ClienteRepository;
+
+@Controller
+@RequestMapping("/api")
+public class ClienteController {
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+
+    @GetMapping
+    public ResponseEntity<List<Cliente>>  listarClientes(){
+        return ResponseEntity.ok().body(clienteRepository.findAll());
+    }
+
+
+    @PostMapping("cliente")
+    public ResponseEntity<String> cadastrarCliente(@RequestBody Cliente cliente) {
+        Cliente clienteSalvo = clienteRepository.save(cliente);
+        return ResponseEntity.ok("Cliente Cadastrado: " + clienteSalvo.getNome());
+    }
+
+
+    @PutMapping("{id}")
+    public ResponseEntity<Cliente> alterarCliente(@PathVariable long id, @RequestBody Cliente cliente) {
+        Cliente clienteAlterado = clienteRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado ID:" + id));
+
+        clienteAlterado.setNome(cliente.getNome());
+        clienteAlterado.setEmail(cliente.getEmail());
+        clienteAlterado.setTelefone(cliente.getTelefone());
+
+        clienteRepository.save(clienteAlterado);
+        return ResponseEntity.ok(clienteAlterado);
+    }
+
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> excluirClientePorId(@PathVariable long id){
+
+        clienteRepository.deleteById(id);
+        return ResponseEntity.ok("Cliente excluído ");
+    }
+
+}
