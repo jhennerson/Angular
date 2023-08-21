@@ -14,10 +14,14 @@ export class ClientesService {
   constructor(private httpClient: HttpClient) { }
 
   list() {
-      return this.httpClient.get<Cliente[]>(this.API)
-      .pipe(
-        first(),
-        tap(clientes => console.log(clientes))
-      );
+    return this.httpClient.get<Cliente[]>(this.API)
+    .pipe(
+      first(),
+      tap(clientes => console.log(clientes))
+    );
+  }
+
+  save(record: Cliente) {
+
   }
 }
