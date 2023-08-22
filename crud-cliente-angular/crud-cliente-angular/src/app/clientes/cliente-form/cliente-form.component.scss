@@ -9,6 +9,11 @@ mat-card {
   width: 100%;
 }
 
+.min-width {
+  width: 100%;
+  min-width: 150px;
+}
+
 .btn-space {
   margin-left: 1rem;
 }

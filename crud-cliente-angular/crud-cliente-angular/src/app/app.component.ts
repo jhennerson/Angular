@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   }
 
-  redirectToHome() {
+  onHome() {
     this.router.navigateByUrl('/');
   }
 

@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 
 import { ClientesService } from '../services/clientes.service';
 
@@ -13,7 +13,7 @@ export class ClienteFormComponent implements OnInit{
 
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: NonNullableFormBuilder,
     private service: ClientesService,
     private location: Location) {
     this.form = this.formBuilder.group({

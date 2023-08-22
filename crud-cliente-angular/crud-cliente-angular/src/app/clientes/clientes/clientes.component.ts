@@ -16,7 +16,8 @@ export class ClientesComponent implements OnInit {
   clientes$: Observable<Cliente[]>;
   displayedColumns = ['id', 'nome', 'email', 'telefone', 'operacoes'];
 
-  constructor(private clienteService: ClientesService, public dialog: MatDialog) {
+  constructor(private clienteService: ClientesService,
+    public dialog: MatDialog) {
     this.clientes$ = this.clienteService.list()
     .pipe(
       catchError(error => {
@@ -34,5 +35,4 @@ export class ClientesComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
