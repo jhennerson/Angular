@@ -16,6 +16,6 @@ export class ClienteResolver {
       return this.service.loadById(route.params['id']);
     }
 
-    return of({ _id: '', nome: '', email: '', telefone: ''});
+    return of({ id: '', nome: '', email: '', telefone: ''});
   }
 }

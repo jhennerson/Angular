@@ -15,16 +15,12 @@ export class ClientesService {
   constructor(private http: HttpClient) { }
 
   list() {
-    return this.http.get<Cliente[]>(this.API)
-    .pipe(
-      first(),
-      tap(clientes => console.log(clientes))
-    );
+    return this.http.get<Cliente[]>(this.API).pipe(first());
   }
 
   loadById(id: string) {
     if (this.cache.length > 0) {
-      const record = this.cache.find(cliente => `${cliente._id}` === `${id}`);
+      const record = this.cache.find(cliente => `${cliente.id}` === `${id}`);
       return record != null ? of(record) : this.getById(id);
     }
     return this.getById(id);
@@ -35,17 +31,21 @@ export class ClientesService {
   }
 
   save(record: Partial<Cliente>) {
-    if (record._id) {
+    if (record.id) {
       return this.update(record);
     }
     return this.create(record);
   }
 
-  private update(record: Partial<Cliente>) {
-    return this.http.put<Cliente>(`${this.API}/${record._id}`, record).pipe(first());
-  }
-
   private create(record: Partial<Cliente>) {
     return this.http.post<Cliente>(this.API, record).pipe(first());
+  }
+
+  private update(record: Partial<Cliente>) {
+    return this.http.put<Cliente>(`${this.API}/${record.id}`, record).pipe(first());
+  }
+
+  remove(id: String) {
+    return this.http.delete(`${this.API}/${id}`).pipe(first());
   }
 }

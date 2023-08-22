@@ -6,7 +6,6 @@ import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/err
 
 import { Cliente } from '../../model/cliente';
 import { ClientesService } from '../../services/clientes.service';
-
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
@@ -16,11 +15,11 @@ export class ClientesComponent implements OnInit {
 
   clientes$: Observable<Cliente[]>;
 
-  constructor(private clienteService: ClientesService,
+  constructor(private clientesService: ClientesService,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute) {
-    this.clientes$ = this.clienteService.list()
+    this.clientes$ = this.clientesService.list()
     .pipe(
       catchError(error => {
         this.onError('Erro ao carregar clientes!');
@@ -29,6 +28,8 @@ export class ClientesComponent implements OnInit {
     );
   }
 
+  ngOnInit(): void {}
+
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg
@@ -36,10 +37,10 @@ export class ClientesComponent implements OnInit {
   }
 
   onEdit(cliente: Cliente) {
-    console.log(cliente);
-    this.router.navigate(['edit', cliente._id], { relativeTo: this.route });
+    this.router.navigate(['edit', cliente.id], { relativeTo: this.route });
   }
 
-  ngOnInit(): void {
+  onRemove(cliente: Cliente) {
+    this.clientesService.remove(cliente.id).subscribe();
   }
 }
