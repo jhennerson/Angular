@@ -28,7 +28,7 @@ public class ClienteController {
 
 
     @GetMapping
-    public @ResponseBody List<Cliente> list(){
+    public @ResponseBody List<Cliente>  list(){
         return clienteRepository.findAll();
     }
 

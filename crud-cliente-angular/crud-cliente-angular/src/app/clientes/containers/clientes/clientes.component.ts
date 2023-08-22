@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
-import { ClientesService } from '../services/clientes.service';
-import { Cliente } from './../model/cliente';
+import { Cliente } from '../../model/cliente';
+import { ClientesService } from '../../services/clientes.service';
 
 @Component({
   selector: 'app-clientes',
@@ -14,10 +15,11 @@ import { Cliente } from './../model/cliente';
 export class ClientesComponent implements OnInit {
 
   clientes$: Observable<Cliente[]>;
-  displayedColumns = ['id', 'nome', 'email', 'telefone', 'operacoes'];
 
   constructor(private clienteService: ClientesService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute) {
     this.clientes$ = this.clienteService.list()
     .pipe(
       catchError(error => {
@@ -31,6 +33,11 @@ export class ClientesComponent implements OnInit {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg
     });
+  }
+
+  onEdit(cliente: Cliente) {
+    console.log(cliente);
+    this.router.navigate(['edit', cliente._id], { relativeTo: this.route });
   }
 
   ngOnInit(): void {

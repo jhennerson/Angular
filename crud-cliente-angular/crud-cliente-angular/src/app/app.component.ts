@@ -10,7 +10,6 @@ export class AppComponent implements OnInit {
   title = 'crud-cliente-angular';
 
   constructor(private router: Router, private route: ActivatedRoute) {
-
   }
 
   onHome() {

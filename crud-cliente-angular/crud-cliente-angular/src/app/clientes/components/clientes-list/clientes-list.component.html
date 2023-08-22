@@ -1,8 +1,8 @@
-<mat-table [dataSource]="clientes" class="mat-elevation-z8">
+<mat-table [dataSource]="clientes">
   <!-- ID Column -->
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-    <mat-cell *matCellDef="let cliente"> {{cliente.id}} </mat-cell>
+    <mat-cell *matCellDef="let cliente" > {{cliente.id}} </mat-cell>
   </ng-container>
 
   <!-- Name Column -->
@@ -25,10 +25,10 @@
 
   <!-- Operations Column -->
   <ng-container matColumnDef="operacoes">
-    <mat-header-cell *matHeaderCellDef> Operações </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef class="operations-column operations-header"> Operações </mat-header-cell>
 
-    <mat-cell *matCellDef="let cliente">
-      <button mat-icon-button color="primary" aria-label="Editar cliente">
+    <mat-cell *matCellDef="let cliente" class="operations-column">
+      <button mat-icon-button color="primary" aria-label="Editar cliente" (click)="onEdit(cliente)">
         <mat-icon>edit_square</mat-icon>
       </button>
 

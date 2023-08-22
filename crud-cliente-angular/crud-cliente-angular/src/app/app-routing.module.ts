@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ClienteFormComponent } from './clientes/cliente-form/cliente-form.component';
+import { ClienteFormComponent } from './clientes/containers/cliente-form/cliente-form.component';
 import { AppComponent } from './app.component';
 
 const routes: Routes = [

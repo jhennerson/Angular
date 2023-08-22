@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 
-import { ClientesService } from '../services/clientes.service';
+import { ClientesService } from '../../services/clientes.service';
 
 @Component({
   selector: 'app-cliente-form',
@@ -15,7 +15,7 @@ export class ClienteFormComponent implements OnInit{
 
   constructor(private formBuilder: NonNullableFormBuilder,
     private service: ClientesService,
-    private location: Location) {
+    private location: Location,) {
     this.form = this.formBuilder.group({
       nome: [null],
       email: [null],
@@ -33,10 +33,6 @@ export class ClienteFormComponent implements OnInit{
 
   private onSuccess() {
     this.onCancel();
-  }
-
-  private onError() {
-
   }
 
   ngOnInit(): void {
