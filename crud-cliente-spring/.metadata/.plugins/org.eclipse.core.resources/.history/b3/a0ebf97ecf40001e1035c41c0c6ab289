@@ -26,10 +26,12 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+
     @GetMapping
     public @ResponseBody List<Cliente> list(){
         return clienteRepository.findAll();
     }
+
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -45,20 +47,22 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> update(@PathVariable Long id, @RequestBody Cliente cliente) {
-        return clienteRepository.findById(id).map(recordFound -> {
-        	recordFound.setNome(cliente.getNome());
-        	recordFound.setEmail(cliente.getEmail());
-        	recordFound.setTelefone(cliente.getTelefone());
-        	Cliente updated = clienteRepository.save(recordFound);
-        	return ResponseEntity.ok().body(updated);
-        })
-        .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Cliente> update(@PathVariable long id, @RequestBody Cliente cliente) {
+        Cliente clienteAlterado = clienteRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado ID:" + id));
+
+        clienteAlterado.setNome(cliente.getNome());
+        clienteAlterado.setEmail(cliente.getEmail());
+        clienteAlterado.setTelefone(cliente.getTelefone());
+
+        clienteRepository.save(clienteAlterado);
+        return ResponseEntity.ok(clienteAlterado);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
-        return clienteRepository.findById(id)
+        clienteRepository.findById(id)
         .map(recodFound -> {
         	clienteRepository.deleteById(id);
         	return ResponseEntity.noContent().<Void>build();
