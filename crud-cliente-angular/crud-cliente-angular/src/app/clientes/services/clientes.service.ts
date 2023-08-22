@@ -22,6 +22,6 @@ export class ClientesService {
   }
 
   save(record: Cliente) {
-
+    return this.httpClient.post<Cliente>(this.API, record).pipe(first());
   }
 }
