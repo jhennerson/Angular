@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { NonNullableFormBuilder } from '@angular/forms';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -19,9 +19,9 @@ export class ClienteFormComponent implements OnInit{
 
   form = this.formBuilder.group({
     id: [''],
-    nome: [''],
-    email: [''],
-    telefone: ['']
+    nome: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+    email: ['', [Validators.required, Validators.email]],
+    telefone: ['', [Validators.required, Validators.pattern('[- +()0-9]{9,}'), Validators.minLength(11)]]
   })
 
   constructor(private formBuilder: NonNullableFormBuilder,
@@ -67,5 +67,9 @@ export class ClienteFormComponent implements OnInit{
     this.dialog.open(ErrorDialogComponent, {
       data: 'Erro ao salvar Cliente.'
     });
+  }
+
+  getErrorMessage(fieldName: string) {
+    return this.formUtils.getFieldErrorMessage(this.form, fieldName);
   }
 }
