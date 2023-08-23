@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Cliente } from '../../model/cliente';
 
@@ -22,5 +22,4 @@ export class ClientesListComponent{
   onDelete(cliente: Cliente) {
     this.remove.emit(cliente);
   }
-
 }
