@@ -35,8 +35,9 @@ public class ClienteController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public Cliente create(@RequestBody Cliente cliente) {
     	return clienteRepository.save(cliente);
+
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> findById(@PathVariable Long id) {
     	return clienteRepository.findById(id)
